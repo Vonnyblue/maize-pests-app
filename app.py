@@ -64,7 +64,7 @@ import os
 # Streamlit Page Config
 # -----------------------------
 st.set_page_config(page_title="Maize Pest Knowledge Base", layout="wide")
-st.title("🌽 Maize Pest and Disease Knowledge Base")
+st.title("🌽 Maize Pest and Their Effects on Plants Knowledge Base")
 
 # -----------------------------
 # Load CSV file safely
@@ -95,9 +95,9 @@ st.sidebar.header("Filters")
 categories = ["All"] + sorted(df_facts["CategoryName"].unique().tolist())
 selected_category = st.sidebar.selectbox("Select Category", categories)
 
-# Pest/Disease filter
+# Pest/ filter
 pests = ["All"] + sorted(df_facts["PestName"].unique().tolist())
-selected_pest = st.sidebar.selectbox("Select Pest/Disease", pests)
+selected_pest = st.sidebar.selectbox("Select Pest", pests)
 
 # Search box
 search_text = st.sidebar.text_input("Search in BiologyDetail or DamageEffect")
