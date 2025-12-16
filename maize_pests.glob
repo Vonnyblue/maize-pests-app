@@ -1,0 +1,35 @@
+DIGEST f6942aab1fcfcce31cfd2801b75a9f49
+Fmaize_pests
+R201:204 Coq.Lists.List <> <> lib
+R214:226 Coq.Lists.List ListNotations <> mod
+ind 271:274 <> Pest
+constr 290:306 <> EuropeanCornBorer
+constr 312:325 <> MaizeStemBorer
+constr 331:341 <> CornEarworm
+constr 347:358 <> FallArmyworm
+constr 364:382 <> WesternCornRootworm
+constr 388:401 <> CornFleaBeetle
+constr 407:415 <> Wireworms
+scheme 271:274 <> Pest_rect
+scheme 271:274 <> Pest_ind
+scheme 271:274 <> Pest_rec
+scheme 271:274 <> Pest_sind
+ind 464:471 <> Category
+constr 487:500 <> MajorBorerPest
+constr 506:519 <> EconomicFactor
+constr 525:535 <> PestBiology
+constr 541:550 <> FoliarPest
+constr 556:570 <> ControlStrategy
+scheme 464:471 <> Category_rect
+scheme 464:471 <> Category_ind
+scheme 464:471 <> Category_rec
+scheme 464:471 <> Category_sind
+rec 607:610 <> Fact
+proj 619:625 <> fact_id
+proj 636:639 <> pest
+proj 651:658 <> category
+proj 674:687 <> biology_detail
+proj 701:713 <> damage_effect
+R629:631 Coq.Init.Datatypes <> nat ind
+R643:646 maize_pests <> Pest ind
+R662:669 maize_pests <> Category ind
