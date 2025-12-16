@@ -58,81 +58,76 @@
 # print(f"CSV file created: {csv_file} ({len(facts)} facts)")
 import streamlit as st
 import pandas as pd
-import re
 import os
 
+# -----------------------------
+# Streamlit Page Config
+# -----------------------------
 st.set_page_config(page_title="Maize Pest Knowledge Base", layout="wide")
 st.title("🌽 Maize Pest and Disease Knowledge Base")
 
-# --- Locate the Prolog file safely ---
-prolog_file = os.path.join(os.path.dirname(__file__), "maize_pests.v")
+# -----------------------------
+# Load CSV file safely
+# -----------------------------
+csv_file = os.path.join(os.path.dirname(__file__), "maize.csv")
+#  Load CSV into DataFrame
+df_facts = pd.read_csv(csv_file)
 
-# --- Function to parse facts from .v file ---
-def parse_prolog_file(file_path):
-    """
-    Reads the Prolog .v file and extracts facts into a list of dictionaries.
-    Each dictionary corresponds to a fact:
-    {'ID', 'Pest', 'Category', 'BiologyDetail', 'DamageEffect'}
-    """
-    pattern = re.compile(
-        r"fact\((\d+),\s*(\w+),\s*(\w+),\s*'(.*?)',\s*'(.*?)'\s*\)\.",
-        re.DOTALL
-    )
-    facts = []
-
-    with open(file_path, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    matches = pattern.findall(content)
-    for match in matches:
-        fact_id, pest, category, bio, damage = match
-        facts.append({
-            "ID": int(fact_id),
-            "Pest/Disease": pest.replace("_", " ").title(),
-            "Category": category.replace("_", " ").title(),
-            "Biology / Symptoms": bio,
-            "Damage / Effects": damage
-        })
-
-    return pd.DataFrame(facts)
-
-# --- Load facts ---
 try:
-    df_facts = parse_prolog_file(prolog_file)
+    df_facts = pd.read_csv(csv_file)
 except FileNotFoundError:
-    st.error(f"Cannot find {prolog_file}. Make sure it exists in the repo folder.")
+    st.error(f"Cannot find {csv_file}. Make sure it exists in the same folder as app.py.")
     st.stop()
 
-# --- Sidebar filters ---
+# Ensure required columns exist
+required_columns = ["FactID", "PestAtom", "PestName", "CategoryAtom", "CategoryName", "BiologyDetail", "DamageEffect"]
+for col in required_columns:
+    if col not in df_facts.columns:
+        st.error(f"Column '{col}' is missing from the CSV file.")
+        st.stop()
+
+# -----------------------------
+# Sidebar Filters
+# -----------------------------
 st.sidebar.header("Filters")
-categories = ["All"] + sorted(df_facts["Category"].unique().tolist())
+
+# Category filter
+categories = ["All"] + sorted(df_facts["CategoryName"].unique().tolist())
 selected_category = st.sidebar.selectbox("Select Category", categories)
 
-pests = ["All"] + sorted(df_facts["Pest/Disease"].unique().tolist())
+# Pest/Disease filter
+pests = ["All"] + sorted(df_facts["PestName"].unique().tolist())
 selected_pest = st.sidebar.selectbox("Select Pest/Disease", pests)
 
-# --- Apply filters ---
+# Search box
+search_text = st.sidebar.text_input("Search in BiologyDetail or DamageEffect")
+
+# -----------------------------
+# Apply filters
+# -----------------------------
 df_display = df_facts.copy()
+df_facts.columns = df_facts.columns.str.strip()
 
 if selected_category != "All":
-    df_display = df_display[df_display["Category"] == selected_category]
+    df_display = df_display[df_display["CategoryName"] == selected_category]
 
 if selected_pest != "All":
-    df_display = df_display[df_display["Pest/Disease"] == selected_pest]
-
-# --- Search box ---
-search_text = st.sidebar.text_input("Search in Biology/Symptoms or Damage/Effects")
+    df_display = df_display[df_display["PestName"] == selected_pest]
 
 if search_text:
     df_display = df_display[
-        df_display["Biology / Symptoms"].str.contains(search_text, case=False) |
-        df_display["Damage / Effects"].str.contains(search_text, case=False)
+        df_display["BiologyDetail"].str.contains(search_text, case=False, na=False) |
+        df_display["DamageEffect"].str.contains(search_text, case=False, na=False)
     ]
 
-# --- Display table ---
+# -----------------------------
+# Display filtered table
+# -----------------------------
 st.dataframe(df_display.reset_index(drop=True), use_container_width=True)
 
-# --- Optional: Download filtered CSV ---
+# -----------------------------
+# Download filtered CSV
+# -----------------------------
 csv = df_display.to_csv(index=False).encode("utf-8")
 st.download_button(
     label="📥 Download Filtered Data as CSV",
@@ -140,3 +135,4 @@ st.download_button(
     file_name="filtered_maize_pests.csv",
     mime="text/csv"
 )
+
