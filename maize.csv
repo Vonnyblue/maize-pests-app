@@ -1,1 +1,11 @@
 FactID,PestAtom,PestName,CategoryAtom,CategoryName,BiologyDetail,DamageEffect
+1,fall_armyworm,Fall Armyworm,field_pest,Field Pest,"Larvae feed on leaves, whorl, and ears; highly mobile and destructive.","Severe defoliation, reduced yields in fields worldwide."
+2,maize_streak_virus,Maize Streak Virus,disease,Disease,"Yellow streaks on leaves, stunted growth.","Reduced yield, malformed cobs."
+3,maize_stem_borer,Maize Stem Borer,major_borer_pest,Major Borer Pest,"Larvae are caterpillars that tunnel inside the plant's stem.","Dead heart and stalk breakage reduce final yield."
+4,corn_earworm,Corn Earworm,major_borer_pest,Major Borer Pest,"Larvae feed on silks and kernels.","Poor grain set and direct kernel loss."
+5,western_corn_rootworm,Western Corn Rootworm,field_pest,Field Pest,"Larvae feed on roots, adults feed on leaves.","Root lodging and reduced nutrient uptake."
+6,gray_leaf_spot,Gray Leaf Spot,disease,Disease,"Gray lesions on leaves.","Premature leaf death, yield reduction."
+7,maize_lethal_necrosis,Maize Lethal Necrosis,disease,Disease,"Chlorotic streaks, stunted plants.","Total crop failure."
+8,corn_flea_beetle,Corn Flea Beetle,foliar_pest,Foliar Pest,"Small beetles feeding on leaves, transmit MCMV.","Leaf necrosis, disease spread."
+9,wireworms,Wireworms,field_pest,Field Pest,"Larvae feed on roots and seeds.","Poor germination, stunted growth."
+10,european_corn_borer,European Corn Borer,major_borer_pest,Major Borer Pest,"Larvae create shot holes in leaves and bore stalks.","Stalk breakage, ear drop."
